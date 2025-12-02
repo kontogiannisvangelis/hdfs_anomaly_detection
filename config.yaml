@@ -1,0 +1,36 @@
+# -------------
+# CONFIGURATION
+# -------------
+
+PROJECT_ROOT: "/home/ekontogi/Diploma-Thesis/hdfs_anomaly_detection"
+
+# File paths
+HDFS_FILE_PATH: "data/NPZ/HDFS.npz"
+ANOMALY_LABEL_FILE_PATH: "data/anomaly_label.csv"
+HDFS_TEMPLATES_FILE_PATH: "data/HDFS_templates.csv"
+TOKENIZED_DATASET_PATH: "data/tokenized_dataset"
+
+# Selected data type
+TYPE_OF_DATA: 2  # 0=CSV_EVENTS, 1=NPZ_EVENTS, 2=NPZ_EVENT_IDS
+
+# Training arguments
+NUM_TRAIN_EPOCHS: 5
+TRAIN_BATCH_SIZE: 16
+EVAL_BATCH_SIZE: 32
+LEARNING_RATE: 5e-5
+TRAINER_CHECKPOINTS_PATH: "checkpoints/trainer"
+
+# LoRA configuration
+LORA_RANK: 64
+LORA_ALPHA: 32
+LORA_DROPOUT: 0.1
+
+# Weighted trainer options
+CLASS_WEIGHTS_ENABLED: false
+FOCAL_ENABLED: false
+GAMMA: 2.0
+
+# Model
+MODEL_NAME: "bert-base-uncased"
+
+

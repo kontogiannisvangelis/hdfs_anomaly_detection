@@ -1,0 +1,9 @@
+datasets
+evaluate
+scikit-learn
+peft
+transformers
+torch
+pyyaml
+pandas
+numpy
