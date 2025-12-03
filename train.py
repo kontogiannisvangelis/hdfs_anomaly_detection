@@ -142,12 +142,11 @@ def main():
         per_device_eval_batch_size=cfg["EVAL_BATCH_SIZE"],
         learning_rate=cfg["LEARNING_RATE"],
         eval_strategy="epoch",
-        save_strategy="epoch",
-        load_best_model_at_end=True,
+        save_strategy="no",
+        load_best_model_at_end=False,
         metric_for_best_model="f1",
         greater_is_better=True,
-        bf16=True,
-        logging_dir=os.path.join(cfg["TRAINER_CHECKPOINTS_PATH"], "logs"), # TODO check this
+        bf16=True
     )
 
     trainer = CustomTrainer(
@@ -163,6 +162,9 @@ def main():
         gamma=cfg.get("GAMMA", 2.0)
     )
 
+    print("----------------")
+    print("FINE TUNE STARTS")
+    print("----------------")
     trainer.train()
     save_training_log(cfg["TRAINER_CHECKPOINTS_PATH"], cfg, trainer) # TODO check this
 

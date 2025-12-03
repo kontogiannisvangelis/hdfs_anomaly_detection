@@ -16,7 +16,7 @@ def load_csv(path_logs, path_labels):
     logs = logs.dropna(subset=["BlockId"])
 
     block_seqs = logs.groupby("BlockId")["EventTemplate"].apply(list)
-    labels = labels.set_index("BlockId")["label"]
+    labels = labels.set_index("BlockId")["Label"]
     label2id = {"Normal": 0, "Anomaly": 1}
 
     df = pd.DataFrame({
