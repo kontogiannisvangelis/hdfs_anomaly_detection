@@ -28,6 +28,7 @@ class CustomTrainer(Trainer):
         self.gamma = gamma
 
     def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+        inputs = {k: v.to(model.device) for k, v in inputs.items()}
         labels = inputs.get("labels")
         outputs = model(**inputs)
         logits = outputs["logits"] if isinstance(outputs, dict) else outputs[0]
@@ -141,6 +142,7 @@ def main():
         per_device_train_batch_size=cfg["TRAIN_BATCH_SIZE"],
         per_device_eval_batch_size=cfg["EVAL_BATCH_SIZE"],
         learning_rate=cfg["LEARNING_RATE"],
+        logging_strategy="epoch",
         eval_strategy="epoch",
         save_strategy="no",
         load_best_model_at_end=False,
