@@ -36,7 +36,7 @@ def get_events_dict(path):
     event_templates = pd.read_csv(path)
     return dict(zip(event_templates['EventId'], event_templates['EventTemplate']))
 
-def load_npz(path_npz, path_event_templates=None):
+def load_npz(path_npz, path_event_templates=None, drop_duplicates=False):
     data = np.load(path_npz, allow_pickle=True)
     x_train = data['x_data']
     y_train = data['y_data']
@@ -45,6 +45,9 @@ def load_npz(path_npz, path_event_templates=None):
         'text': x_train,
         'label': y_train
     })
+    if drop_duplicates:
+        df = df.drop_duplicates(subset=['text'], keep='first')
+
     if path_event_templates:
         eventid2event = get_events_dict(path_event_templates)
         df['text'] = df['text'].apply(lambda seq: ', '.join([eventid2event[event_id] for event_id in seq]))

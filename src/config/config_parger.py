@@ -54,7 +54,7 @@ if __name__ == "__main__":
     parser = get_arg_parser()
     cli_args = parser.parse_args()
 
-    yaml_cfg = load_yaml_config("../config.yaml")
+    yaml_cfg = load_yaml_config("../../config/base.yaml")
     cfg = merge_configs(yaml_cfg, cli_args)
     print("--------------------")
     print("ACTIVE CONFIGURATION")

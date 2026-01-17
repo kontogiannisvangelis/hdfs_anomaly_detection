@@ -17,7 +17,7 @@ from datasets import load_from_disk
 from peft import LoraConfig, get_peft_model
 import evaluate
 
-from src.config import get_arg_parser, load_yaml_config, merge_configs
+from src.config.config_parger import get_arg_parser, load_yaml_config, merge_configs
 
 
 class CustomTrainer(Trainer):
@@ -90,7 +90,7 @@ def main():
     parser = get_arg_parser()
     cli_args = parser.parse_args()
 
-    yaml_cfg = load_yaml_config("config.yaml")
+    yaml_cfg = load_yaml_config("../config/base.yaml")
     cfg = merge_configs(yaml_cfg, cli_args)
 
     print("--------------------")

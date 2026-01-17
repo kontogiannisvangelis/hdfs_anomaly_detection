@@ -1,7 +1,7 @@
 import numpy as np
-from src.dataset_loader import load_npz
+from src.dataset.dataset_loader import load_npz
 def main():
-    df = load_npz("./data/NPZ/HDFS.npz", "./data/HDFS_templates.csv")
+    df = load_npz("../../data/NPZ/HDFS.npz", "../../data/HDFS_templates.csv", True)
 
     lengths = df['text'].str.len().tolist()
 

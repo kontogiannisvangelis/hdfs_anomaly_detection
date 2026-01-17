@@ -4,21 +4,22 @@
 
 PROJECT_ROOT: "/home/ekontogi/Diploma-Thesis/hdfs_anomaly_detection"
 
-# File paths
-HDFS_FILE_PATH: "data/NPZ/HDFS.npz"
-ANOMALY_LABEL_FILE_PATH: "data/anomaly_label.csv"
-HDFS_TEMPLATES_FILE_PATH: "data/HDFS_templates.csv"
-TOKENIZED_DATASET_PATH: "data/tokenized_dataset"
+# File paths relevant to scripts folder
+HDFS_FILE_PATH: "../data/NPZ/HDFS.npz"
+ANOMALY_LABEL_FILE_PATH: "../data/anomaly_label.csv"
+HDFS_TEMPLATES_FILE_PATH: "../data/HDFS_templates.csv"
+TOKENIZED_DATASET_PATH: "../data/tokenized_dataset"
 
 # Selected data type
 TYPE_OF_DATA: 2  # 0=CSV_EVENTS, 1=NPZ_EVENTS, 2=NPZ_EVENT_IDS
+DROP_DUPLICATES: true
 
 # Training arguments
 NUM_TRAIN_EPOCHS: 5
 TRAIN_BATCH_SIZE: 16
 EVAL_BATCH_SIZE: 32
 LEARNING_RATE: 0.001
-TRAINER_CHECKPOINTS_PATH: "checkpoints/trainer"
+TRAINER_CHECKPOINTS_PATH: "../checkpoints/trainer"
 
 # LoRA configuration
 LORA_RANK: 64
