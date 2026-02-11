@@ -1,5 +1,5 @@
 import numpy as np
-from src.dataset.dataset_loader import load_npz
+from hdfs_lad.dataset.dataset_loader import load_npz
 def main():
     df = load_npz("../../data/NPZ/HDFS.npz", "../../data/HDFS_templates.csv", True)
 

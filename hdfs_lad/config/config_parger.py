@@ -21,7 +21,6 @@ def get_arg_parser():
     parser.add_argument("--DRY_RUN", action="store_true")
 
     parser.add_argument("--CONFIG_FILE_PATH", type=str)
-    parser.add_argument("--PROJECT_ROOT", type=str)
 
 
     # File paths

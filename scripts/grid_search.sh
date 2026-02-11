@@ -13,7 +13,8 @@ for lr in "${LEARNING_RATES[@]}"; do
       echo "-------------------------"
 
       alpha=$((rank * 2))
-      python3 train.py \
+      python3 /app/scripts/train.py \
+        --CONFIG_FILE_PATH /app/config/base.yaml \
         --LEARNING_RATE $lr \
         --TRAIN_BATCH_SIZE $bs \
         --LORA_RANK $rank \

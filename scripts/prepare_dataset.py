@@ -1,11 +1,11 @@
 import yaml
 from datasets import DatasetDict
 
-from src.dataset.dataset_loader import load_csv, load_npz
-from src.dataset.dataset_builder import create_hg_train_val_test
-from src.dataset.tokenize import create_tokenizer, tokenize_dataset
+from hdfs_lad.dataset.dataset_loader import load_csv, load_npz
+from hdfs_lad.dataset.dataset_builder import create_hg_train_val_test
+from hdfs_lad.dataset.tokenize import create_tokenizer, tokenize_dataset
 
-def prepare_dataset(config_path: str = "../config/base.yaml"):
+def prepare_dataset(config_path: str = "/app/config/base.yaml"):
     with open(config_path, "r") as f:
         config = yaml.safe_load(f)
 

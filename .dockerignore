@@ -1,0 +1,37 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Notebooks (big & not needed in image)
+notebooks/
+
+# Git
+.git/
+.gitignore
+
+# Local envs
+.venv/
+venv/
+.env
+
+# Data & outputs
+data/
+outputs/
+checkpoints/
+wandb/
+
+# Editor / OS junk
+.vscode/
+.idea/
+.DS_Store
+
+# Tests & experiments (optional)
+tests/
+
+# Old dependency files
+requirements.txt
+
+# Docker files themselves (optional)
+.dockerignore
