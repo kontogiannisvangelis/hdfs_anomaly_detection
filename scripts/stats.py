@@ -5,13 +5,9 @@ import matplotlib.pyplot as plt
 METRIC = "eval_f1"
 
 DISTINGUISHING_HPARAMS = [
-    "NUM_TRAIN_EPOCHS",
     "TRAIN_BATCH_SIZE",
-    "EVAL_BATCH_SIZE",
     "LEARNING_RATE",
     "LORA_RANK",
-    "LORA_ALPHA",
-    "LORA_DROPOUT",
     "CLASS_WEIGHTS_ENABLED",
 ]
 
@@ -40,6 +36,18 @@ def extract_metric_over_epochs(train_history, metric):
 
     return epochs, values
 
+def get_label_epoch_metric_values(folder, metric=METRIC):
+    res = []
+    for filename in os.listdir(folder):
+        if filename.endswith(".json"):
+            path = os.path.join(folder, filename)
+            data = load_json(path)
+            hparams = data["hyperparameters"]
+            train_history = data["train_history"]
+            label = extract_run_label(hparams)
+            epoch, metric_values = extract_metric_over_epochs(train_history, metric)
+            res.append((label, epoch, metric_values))
+    return res
 
 def plot_from_folder(folder, metric=METRIC):
     plt.figure(figsize=(12, 7))
@@ -62,15 +70,39 @@ def plot_from_folder(folder, metric=METRIC):
             if len(epochs) == 0:
                 print(f"Metric '{metric}' not found in {filename}")
                 continue
-
+            plt.figure(figsize=(12, 10))
+            plt.ylim(0.8, 0.95)
             plt.plot(epochs, metric_values, marker="o", label=label)
 
-    plt.legend(fontsize=8)
+    plt.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=2)
     plt.grid(True, alpha=0.4)
     plt.tight_layout()
     plt.show()
 
 
+def find_max_for_each_label(folder, metric=METRIC):
+    total = get_label_epoch_metric_values(folder, metric)
+    p = []
+    for t in total:
+        p.append((max(t[2]), t[0]))
+    p.sort(key=lambda x: x[0], reverse=True)
+    for e in p:
+        print(e)
+def find_max(folder, metric=METRIC):
+    total = get_label_epoch_metric_values(folder, metric)
+    label = ""
+    max_val = 0
+    for t in total:
+        max_local = max(t[2])
+        if max_local > max_val:
+            max_val = max_local
+            label = t[0]
+    print(label)
+    print(max_val)
+
+
+
+
 if __name__ == "__main__":
-    FOLDER = "checkpoints/trainer"
-    plot_from_folder(FOLDER)
+    FOLDER = "../checkpoints/trainer_16_2_26"
+    find_max_for_each_label(FOLDER)

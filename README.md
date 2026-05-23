@@ -21,8 +21,8 @@ docker run -d --gpus all \
 
 ```
 rsync -avz \
-    --exclude-from='.dockerignore' \
+    --exclude-from='./hdfs_anomaly_detection/.dockerignore' \
     -e "ssh -i ~/.ssh/key" \
-    ./vkontogiannis@gpu.epu.ntua.gr:/mnt/datadrive/vkontogiannis \
+    ./hdfs_anomaly_detection vkontogiannis@gpu.epu.ntua.gr:/mnt/datadrive/vkontogiannis \
     --dry-run
 ```

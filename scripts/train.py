@@ -63,10 +63,8 @@ def compute_metrics(eval_pred):
     }
 
 
-def save_training_log(output_dir, cfg, trainer):
+def save_training_log(output_dir, cfg, trainer, timestamp):
     os.makedirs(output_dir, exist_ok=True)
-
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     log_path = os.path.join(output_dir, f"training_log_{timestamp}.json")
 
     log_data = {
@@ -78,6 +76,7 @@ def save_training_log(output_dir, cfg, trainer):
         json.dump(log_data, f, indent=4)
 
     print(f"Training log saved to: {log_path}")
+
 
 def print_conf(cfg):
     print("--------------------")
@@ -103,7 +102,7 @@ def main():
         return
 
     ds = load_from_disk(cfg["TOKENIZED_DATASET_PATH"])
-    train_ds, eval_ds = ds["train"], ds["val"]
+    train_ds, eval_ds, test_ds = ds["train"], ds["val"], ds["test"]
 
     model = AutoModelForSequenceClassification.from_pretrained(
         cfg["MODEL_NAME"],
@@ -148,7 +147,8 @@ def main():
         load_best_model_at_end=False,
         metric_for_best_model="f1",
         greater_is_better=True,
-        bf16=True
+        max_steps=10,
+#        bf16=True
     )
 
     trainer = CustomTrainer(
@@ -167,7 +167,20 @@ def main():
     print("FINE TUNE STARTS")
     print("----------------")
     trainer.train()
-    save_training_log(cfg["TRAINER_CHECKPOINTS_PATH"], cfg, trainer) # TODO check this
+
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    save_training_log(cfg["TRAINER_CHECKPOINTS_PATH"], cfg, trainer, timestamp)
+
+    test_results = trainer.predict(test_ds)
+    test_log_path = os.path.join(cfg["TRAINER_CHECKPOINTS_PATH"], f"test_log_{timestamp}")
+    with open(test_log_path, "w") as f:
+        json.dump({
+            "metrics": test_results.metrics,
+            "predictions": np.argmax(test_results.predictions, axis=-1).tolist(),
+            "labels": test_results.label_ids.tolist(),
+        }, f, indent=4)
+    print(f"Test log saved to: {test_log_path}")
+
 
 
 if __name__ == "__main__":

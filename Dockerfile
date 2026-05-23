@@ -12,7 +12,8 @@ RUN python3 -m pip install --upgrade pip
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install "torch==2.6.0" --index-url https://download.pytorch.org/whl/cu124
-
+RUN pip install protobuf
+ENV PYTHONPATH=/app
 WORKDIR /app
 
 COPY pyproject.toml README.md /app/

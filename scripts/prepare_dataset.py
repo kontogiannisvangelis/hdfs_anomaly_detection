@@ -4,6 +4,7 @@ from datasets import DatasetDict
 from hdfs_lad.dataset.dataset_loader import load_csv, load_npz
 from hdfs_lad.dataset.dataset_builder import create_hg_train_val_test
 from hdfs_lad.dataset.tokenize import create_tokenizer, tokenize_dataset
+from hdfs_lad.config.config_parger import get_arg_parser
 
 def prepare_dataset(config_path: str = "/app/config/base.yaml"):
     with open(config_path, "r") as f:
@@ -47,4 +48,7 @@ def prepare_dataset(config_path: str = "/app/config/base.yaml"):
 
 
 if __name__ == "__main__":
-    prepare_dataset()
+    parser = get_arg_parser()
+    cli_args = parser.parse_args()
+    prepare_dataset(cli_args.CONFIG_FILE_PATH)
+
